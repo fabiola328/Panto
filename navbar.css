@@ -1,0 +1,173 @@
+/* Navbar styles (mobile-first)
+	- Contains small utility classes used site-wide (container, sr-only)
+	- Replace colors and fonts to match your Figma palette
+*/
+
+:root{
+	--color-bg: #ffffff;
+	--color-ink: #1f2937;
+	--color-accent: #ff7a3d; /* orange accent for links/buttons */
+	--max-width: 1100px;
+}
+
+/* Simple reset for body and typography */
+html,body{height:100%;}
+body{
+	margin:0;
+	font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	color:var(--color-ink);
+	background:var(--color-bg);
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+
+/* Container centers content and provides horizontal padding */
+.container{
+	width:100%;
+	max-width:var(--max-width);
+	margin:0 auto;
+	padding:0 1rem;
+	box-sizing:border-box;
+}
+
+.nav-container{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	/* fixed header height so centering math is predictable */
+	height:72px;
+	padding:0;
+}
+
+.logo{
+	font-weight:700;
+	font-size:1.125rem;
+	color:var(--color-ink);
+	text-decoration:none;
+}
+
+/* header sits on top of the hero and is transparent */
+.site-header{
+	position:absolute;
+	top:0;left:0;width:100%;z-index:60;background:transparent;
+}
+
+/* when overlaying the hero, make the logo white for contrast */
+.site-header .logo{color:#fff}
+
+/* accessible sr-only text */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Mobile hamburger */
+.nav-toggle{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	width:44px;height:44px;
+	border:0;background:transparent;cursor:pointer;
+}
+.hamburger{
+	display:block;width:20px;height:2px;background:var(--color-ink);position:relative;
+}
+.hamburger:before,.hamburger:after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--color-ink);}
+.hamburger:before{top:-6px}
+.hamburger:after{top:6px}
+
+/* Primary menu: hidden on small screens */
+.primary-menu{display:none}
+.primary-menu .nav-list{list-style:none;padding:0;margin:0;display:flex;gap:2rem;align-items:center}
+.primary-menu a{color:#fff;text-decoration:none;padding:0.5rem}
+.primary-menu .product-btn{background:transparent;border:0;color:#fff;font:inherit;cursor:pointer;padding:0.25rem}
+
+/* Mobile slide-in menu (right drawer) */
+body.menu-open{overflow:hidden}
+@media (max-width: 767px){
+	.primary-menu{display:block;position:fixed;right:0;top:0;height:100vh;width:80%;max-width:320px;background:#fff;color:var(--color-ink);transform:translateX(100%);transition:transform .28s ease;z-index:75;padding:88px 1rem 1rem;box-shadow:-20px 0 40px rgba(2,6,23,0.12)}
+	.primary-menu.open{transform:translateX(0)}
+	.primary-menu .nav-list{flex-direction:column;gap:0;align-items:center;text-align:center}
+	.primary-menu a{color:var(--color-ink);padding:1rem 0;border-bottom:1px solid rgba(0,0,0,0.04);width:100%;font-size:1.05rem}
+	.nav-actions{display:flex;align-items:center;gap:0.5rem}
+	.nav-toggle{display:inline-flex}
+	.shop-icon{order:1}
+	.nav-toggle{order:2}
+
+	/* larger tappable icons on mobile */
+	.shop-icon{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}
+	.shop-icon svg{width:22px;height:22px}
+	.nav-toggle{width:44px;height:44px}
+	.nav-toggle .hamburger{width:22px;height:2px}
+}
+
+/* drawer overlay */
+.drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.45);z-index:70;opacity:0;visibility:hidden;transition:opacity .2s ease}
+.drawer-overlay.open{opacity:1;visibility:visible}
+
+/* Drawer close button inside the menu */
+.primary-menu .drawer-close{
+	position:absolute;
+	top:12px;
+	right:12px;
+	background:transparent;
+	border:0;
+	font-size:1.25rem;
+	color:var(--color-ink);
+	padding:6px;
+	cursor:pointer;
+}
+.primary-menu .drawer-close:focus{outline:2px solid rgba(0,0,0,0.08);border-radius:6px}
+
+/* Ensure close button visually separated from nav items */
+.primary-menu .nav-list{margin-top:28px}
+
+/* logo adjustments on mobile */
+@media (max-width:767px){
+	.site-header .logo{padding-left:0.75rem;font-size:1.25rem}
+}
+
+	/* When header overlays hero, make icons white for contrast */
+	.site-header .shop-icon svg{stroke:#fff;fill:#fff}
+	.site-header .nav-toggle .hamburger,
+	.site-header .nav-toggle .hamburger:before,
+	.site-header .nav-toggle .hamburger:after{background:#fff}
+
+	/* spacing between shop icon and menu toggle */
+	.nav-actions .shop-icon{margin-right:10px}
+
+.nav-actions{display:flex;align-items:center;gap:0.75rem}
+.shop-icon{display:inline-flex;align-items:center;justify-content:center;background:transparent;border-radius:6px;padding:6px}
+.shop-icon svg{display:block}
+
+/* Larger screens: show menu inline */
+@media (min-width: 768px){
+	.nav-toggle{display:none}
+	.primary-menu{display:block}
+	/* Center the menu: make header container a flex row with space-between, keep nav centered using absolute positioning */
+	.nav-container{position:relative}
+	/* center horizontally and vertically within the header */
+	.primary-menu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+}
+
+/* Mega menu */
+.has-mega{position:relative}
+.mega-menu{position:absolute;left:50%;transform:translateX(-50%);top:calc(100% + 12px);background:#fff;color:var(--color-ink);border-radius:8px;box-shadow:0 10px 30px rgba(15,23,42,0.15);padding:1rem;display:none;min-width:420px;z-index:40}
+.mega-menu h4{margin:0 0 0.5rem}
+.mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.has-mega.open .mega-menu{display:block}
+/* Ensure links inside the mega menu are dark for readability when opened over the hero */
+.mega-menu a{color:var(--color-ink);text-decoration:none}
+
+/* ensure accessible focus styles */
+.primary-menu a:focus, .product-btn:focus{outline:2px solid rgba(255,122,61,0.2);outline-offset:3px}
+
+/* Search input: remove browser default focus outline/box-shadow when clicked */
+.hero-search input:focus,
+.hero-search input:focus-visible{
+	outline: none;
+	box-shadow: none;
+}
+
+/* Hide the drawer close button on larger screens (desktop) */
+@media (min-width: 768px){
+	.primary-menu .drawer-close{display:none}
+}
+

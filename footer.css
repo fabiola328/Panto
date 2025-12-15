@@ -1,0 +1,6 @@
+/* Footer-specific styles (keeps this file small; global footer layout is in hero.css) */
+
+.site-footer .footer-brand a{font-weight:700;color:var(--color-ink);text-decoration:none}
+.site-footer p{color:#6b7280;margin:0.25rem 0 0;font-size:0.9rem}
+.footer-nav{display:flex;gap:1rem}
+.footer-nav a{color:#374151;text-decoration:none;font-size:0.95rem}
